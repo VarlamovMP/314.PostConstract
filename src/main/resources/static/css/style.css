@@ -1,0 +1,42 @@
+/* style.css */
+
+/* Стили для цветовой схемы */
+.left-panel {
+    background-color: white; /* Левый панель белый */
+}
+
+.right-panel {
+    background-color: whitesmoke; /* Светло-серый цвет (вся правая часть) */
+    padding: 20px; /* Добавляем отступы для лучшего восприятия */
+}
+
+/* Убираем границы списка для кнопок */
+.list-group-item {
+    border: none;
+}
+
+.active-button {
+    background-color: #007bff; /* Цвет для активной кнопки */
+    color: white;
+}
+
+.header-bar {
+    background-color: black; /* Черный цвет полосы */
+    color: white; /* Белый цвет текста */
+    padding: 10px;
+    display: flex;
+    justify-content: space-between; /* Разделяем содержимое по краям */
+    align-items: center; /* Центрируем элементы вертикально */
+}
+
+.logout-btn {
+    background: none; /* Прозрачный фон */
+    border: none; /* Без границы */
+    color: white; /* Белый цвет текста */
+    cursor: pointer; /* Указатель на кнопку */
+    font-size: 16px; /* Размер шрифта */
+}
+
+.logout-btn:hover {
+    text-decoration: underline; /* Подчеркивание при наведении */
+}
