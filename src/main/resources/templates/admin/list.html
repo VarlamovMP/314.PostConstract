@@ -1,38 +1,614 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Все пользователи</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<p>&nbsp; Все пользователи</p>-->
+<!--<table border="5">-->
+<!--    <tbody>-->
+<!--    <tr>-->
+<!--        <td>Id</td>-->
+<!--        <td>Name</td>-->
+<!--        <td>Lastname</td>-->
+<!--        <td>Age</td>-->
+<!--        <td>Action</td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--    <p>&nbsp;</p>-->
+<!--    <p>&nbsp;</p>-->
+<!--    <tr th:each="user : ${list}">-->
+<!--        <td th:text="${user.getId()}"></td>-->
+<!--        <td th:text="${user.getName()}"></td>-->
+<!--        <td th:text="${user.getLastname()}"></td>-->
+<!--        <td th:text="${user.getAge()}"></td>-->
+<!--        <td>-->
+<!--            <a th:href="@{/admin/edit(id=${user.getId()})}">edit</a>-->
+<!--            <a th:href="@{/admin/delete(id=${user.getId()})}">delete</a>-->
+<!--        </td>-->
+<!--    </tr>-->
+
+<!--</table>-->
+<!--<hr/>-->
+<!--<a href="/admin/new">Create new user</a>-->
+<!--<hr/>-->
+<!--<a href="/logout">EXIT</a>-->
+<!--</body>-->
+<!--</html>-->
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="ru">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">-->
+<!--    <title>Admin Panel</title>-->
+<!--    <style>-->
+<!--        /* Стили для цветовой схемы */-->
+<!--        .left-panel {-->
+<!--            background-color: white; /* Левый панель белый */-->
+<!--        }-->
+<!--        .right-panel {-->
+<!--            background-color: whitesmoke; /* Светло-серый цвет (вся правая часть) */-->
+<!--            padding: 20px; /* Добавляем отступы для лучшего восприятия */-->
+<!--        }-->
+<!--        /* Убираем границы списка для кнопок */-->
+<!--        .list-group-item {-->
+<!--            border: none;-->
+<!--        }-->
+<!--        .active-button {-->
+<!--            background-color: #007bff; /* Цвет для активной кнопки */-->
+<!--            color: white;-->
+<!--        }-->
+<!--        .header-bar {-->
+<!--            background-color: black; /* Черный цвет полосы */-->
+<!--            color: white; /* Белый цвет текста */-->
+<!--            padding: 10px;-->
+<!--            display: flex;-->
+<!--            justify-content: space-between; /* Разделяем содержимое по краям */-->
+<!--            align-items: center; /* Центрируем элементы вертикально */-->
+<!--        }-->
+<!--        .logout-btn {-->
+<!--            background: none; /* Прозрачный фон */-->
+<!--            border: none; /* Без границы */-->
+<!--            color: white; /* Белый цвет текста */-->
+<!--            cursor: pointer; /* Указатель на кнопку */-->
+<!--            font-size: 16px; /* Размер шрифта */-->
+<!--        }-->
+<!--        .logout-btn:hover {-->
+<!--            text-decoration: underline; /* Подчеркивание при наведении */-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--&lt;!&ndash; Полоса с адресом электронной почты и кнопкой Logout &ndash;&gt;-->
+<!--<div class="header-bar">-->
+<!--    <div>-->
+<!--        <span id="emailDisplay" th:text="${adminEmail} + ' with roles: ADMIN USER'"></span>-->
+<!--    </div>-->
+<!--&lt;!&ndash;    <button class="logout-btn" id="logoutBtn">Logout</button>&ndash;&gt;-->
+<!--    <button class="btn" id="logoutBtn" onclick="window.location.href='/logout'">Logout</button>-->
+
+<!--</div>-->
+
+<!--<div class="container mt-5">-->
+<!--    <div class="d-flex bd-highlight">-->
+<!--        <div class="flex-shrink-1 p-2 bd-highlight left-panel">-->
+<!--            <ul class="list-group">-->
+<!--                <li class="list-group-item active-button" id="adminBtn">ADMIN</li>-->
+<!--                <li class="list-group-item" id="userBtn">USER</li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--        <div class="w-100 p-2 bd-highlight right-panel">-->
+<!--            <h2 class="mb-4">Admin Panel</h2>-->
+<!--            <ul class="list-group list-group-horizontal mb-3">-->
+<!--                <li class="list-group-item" id="userTableBtn">User Table</li>-->
+<!--                <li class="list-group-item" id="newUserBtn">New User</li>-->
+<!--            </ul>-->
+
+<!--            <div id="content">-->
+<!--                <div id="adminPanel" style="display: block;">-->
+<!--                    <h3>All Users</h3>-->
+
+<!--                    &lt;!&ndash; Таблица пользователей &ndash;&gt;-->
+<!--                    <table border="2" class="table table-striped">-->
+<!--                        <thead>-->
+<!--                        <tr>-->
+<!--                            <td>ID</td>-->
+<!--                            <td>Name</td>-->
+<!--                            <td>Lastname</td>-->
+<!--                            <td>Age</td>-->
+<!--                            <td>Action</td>-->
+<!--                        </tr>-->
+<!--                        </thead>-->
+<!--                        <tbody>-->
+<!--                        <tr th:each="user : ${list}">-->
+<!--                            <td th:text="${user.getId()}"></td>-->
+<!--                            <td th:text="${user.getName()}"></td>-->
+<!--                            <td th:text="${user.getLastname()}"></td>-->
+<!--                            <td th:text="${user.getAge()}"></td>-->
+<!--                            <td>-->
+<!--                                <a th:href="@{/admin/edit(id=${user.getId()})}">edit</a>-->
+<!--                                <a th:href="@{/admin/delete(id=${user.getId()})}">delete</a>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                        </tbody>-->
+<!--                    </table>-->
+
+<!--                </div>-->
+
+<!--                <div id="newUserContent" style="display: none;">-->
+<!--                    <h3>Создание нового пользователя</h3>-->
+<!--                    <p>Форма для создания нового пользователя будет здесь.</p>-->
+<!--                </div>-->
+
+<!--                <div id="userContent" style="display: none;">-->
+<!--                    <h3>Содержимое для пользователя</h3>-->
+<!--                    <p>Пока здесь пусто.</p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<script>-->
+<!--    // ... ваш существующий JavaScript здесь ...-->
+
+<!--    // Логика для кнопки Logout-->
+<!--    // document.getElementById('logoutBtn').addEventListener('click', function() {-->
+<!--    //     alert('Вы вышли из системы'); // Уведомление при нажатии-->
+<!--    //     // Здесь можно добавить реальную логику выхода из системы-->
+<!--    // });-->
+<!--</script>-->
+
+<!--</body>-->
+<!--</html>-->
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="ru">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">-->
+<!--    <title>Admin Panel</title>-->
+<!--    <style>-->
+<!--        /* Стили для цветовой схемы */-->
+<!--        .left-panel {-->
+<!--            background-color: white; /* Левый панель белый */-->
+<!--        }-->
+<!--        .right-panel {-->
+<!--            background-color: whitesmoke; /* Светло-серый цвет (вся правая часть) */-->
+<!--            padding: 20px; /* Добавляем отступы для лучшего восприятия */-->
+<!--        }-->
+<!--        /* Убираем границы списка для кнопок */-->
+<!--        .list-group-item {-->
+<!--            border: none;-->
+<!--        }-->
+<!--        .active-button {-->
+<!--            background-color: #007bff; /* Цвет для активной кнопки */-->
+<!--            color: white; /* Белый цвет текста для активной кнопки */-->
+<!--        }-->
+<!--        .header-bar {-->
+<!--            background-color: black; /* Черный цвет полосы */-->
+<!--            color: white; /* Белый цвет текста */-->
+<!--            padding: 10px;-->
+<!--            display: flex;-->
+<!--            justify-content: space-between; /* Разделяем содержимое по краям */-->
+<!--            align-items: center; /* Центрируем элементы вертикально */-->
+<!--        }-->
+<!--        .logout-btn {-->
+<!--            background: none; /* Прозрачный фон */-->
+<!--            border: none; /* Без границы */-->
+<!--            color: white; /* Белый цвет текста */-->
+<!--            cursor: pointer; /* Указатель на кнопку */-->
+<!--            font-size: 16px; /* Размер шрифта */-->
+<!--        }-->
+<!--        .logout-btn:hover {-->
+<!--            text-decoration: underline; /* Подчеркивание при наведении */-->
+<!--        }-->
+<!--        .inactive-button {-->
+<!--            color: #212529; /* Цвет для неактивных кнопок */-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--&lt;!&ndash; Полоса с адресом электронной почты и кнопкой Logout &ndash;&gt;-->
+<!--<div class="header-bar">-->
+<!--    <div>-->
+<!--        <span id="emailDisplay" th:text="${adminEmail} + ' with roles: ADMIN USER'"></span>-->
+<!--    </div>-->
+<!--    <button class="logout-btn" id="logoutBtn" onclick="window.location.href='/logout'">Logout</button>-->
+<!--</div>-->
+
+<!--<div class="container mt-5">-->
+<!--    <div class="d-flex bd-highlight">-->
+<!--        <div class="flex-shrink-1 p-2 bd-highlight left-panel">-->
+<!--            <ul class="list-group">-->
+<!--                <li class="list-group-item active-button" id="adminBtn" onclick="showAdminPanel()">ADMIN</li>-->
+<!--                <li class="list-group-item inactive-button" id="userBtn" onclick="showUserPanel()">USER</li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--        <div class="w-100 p-2 bd-highlight right-panel">-->
+<!--            <h2 class="mb-4">Admin Panel</h2>-->
+<!--            <ul class="list-group list-group-horizontal mb-3">-->
+<!--                <li class="list-group-item" id="userTableBtn">User Table</li>-->
+<!--                <li class="list-group-item" id="newUserBtn">New User</li>-->
+<!--            </ul>-->
+
+<!--            <div id="content">-->
+<!--                <div id="adminPanel" style="display: block;">-->
+<!--                    <h3>All Users</h3>-->
+<!--                    &lt;!&ndash; Таблица пользователей &ndash;&gt;-->
+<!--                    <table border="2" class="table table-striped">-->
+<!--                        <thead>-->
+<!--                        <tr>-->
+<!--                            <td>ID</td>-->
+<!--                            <td>Name</td>-->
+<!--                            <td>Lastname</td>-->
+<!--                            <td>Age</td>-->
+<!--                            <td>Action</td>-->
+<!--                        </tr>-->
+<!--                        </thead>-->
+<!--                        <tbody>-->
+<!--                        <tr th:each="user : ${list}">-->
+<!--                            <td th:text="${user.getId()}"></td>-->
+<!--                            <td th:text="${user.getName()}"></td>-->
+<!--                            <td th:text="${user.getLastname()}"></td>-->
+<!--                            <td th:text="${user.getAge()}"></td>-->
+<!--                            <td>-->
+<!--                                <a th:href="@{/admin/edit(id=${user.getId()})}">edit</a>-->
+<!--                                <a th:href="@{/admin/delete(id=${user.getId()})}">delete</a>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                        </tbody>-->
+<!--                    </table>-->
+<!--                </div>-->
+
+<!--                <div id="newUserContent" style="display: none;">-->
+<!--                    <h3>Создание нового пользователя</h3>-->
+<!--                    <p>Форма для создания нового пользователя будет здесь.</p>-->
+<!--                </div>-->
+
+<!--                <div id="userContent" style="display: none;">-->
+<!--                    <h3>User information-page</h3>-->
+<!--                    <p>Здесь будет информация о пользователе.</p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<script>-->
+<!--    function showAdminPanel() {-->
+<!--        document.getElementById('adminPanel').style.display = 'block';-->
+<!--        document.getElementById('newUserContent').style.display = 'none';-->
+<!--        document.getElementById('userContent').style.display = 'none';-->
+
+<!--        document.getElementById('adminBtn').classList.add('active-button');-->
+<!--        document.getElementById('adminBtn').classList.remove('inactive-button');-->
+<!--        document.getElementById('userBtn').classList.remove('active-button');-->
+<!--        document.getElementById('userBtn').classList.add('inactive-button');-->
+<!--    }-->
+
+<!--    function showUserPanel() {-->
+<!--        document.getElementById('adminPanel').style.display = 'none';-->
+<!--        document.getElementById('newUserContent').style.display = 'none';-->
+<!--        document.getElementById('userContent').style.display = 'block';-->
+
+<!--        document.getElementById('userBtn').classList.add('active-button');-->
+<!--        document.getElementById('userBtn').classList.remove('inactive-button');-->
+<!--        document.getElementById('adminBtn').classList.remove('active-button');-->
+<!--        document.getElementById('adminBtn').classList.add('inactive-button');-->
+<!--    }-->
+
+<!--    // Инициализируем первоначальное состояние-->
+<!--    showAdminPanel();-->
+<!--</script>-->
+
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="ru">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">-->
+<!--    <title>Admin Panel</title>-->
+<!--    <style>-->
+<!--        /* Стили для цветовой схемы */-->
+<!--        .left-panel {-->
+<!--            background-color: white; /* Левый панель белый */-->
+<!--        }-->
+<!--        .right-panel {-->
+<!--            background-color: whitesmoke; /* Светло-серый цвет (вся правая часть) */-->
+<!--            padding: 20px; /* Добавляем отступы для лучшего восприятия */-->
+<!--        }-->
+<!--        /* Убираем границы списка для кнопок */-->
+<!--        .list-group-item {-->
+<!--            border: none;-->
+<!--        }-->
+<!--        .active-button {-->
+<!--            background-color: #007bff; /* Цвет для активной кнопки */-->
+<!--            color: white; /* Белый цвет текста для активной кнопки */-->
+<!--        }-->
+<!--        .header-bar {-->
+<!--            background-color: black; /* Черный цвет полосы */-->
+<!--            color: white; /* Белый цвет текста */-->
+<!--            padding: 10px;-->
+<!--            display: flex;-->
+<!--            justify-content: space-between; /* Разделяем содержимое по краям */-->
+<!--            align-items: center; /* Центрируем элементы вертикально */-->
+<!--        }-->
+<!--        .logout-btn {-->
+<!--            background: none; /* Прозрачный фон */-->
+<!--            border: none; /* Без границы */-->
+<!--            color: white; /* Белый цвет текста */-->
+<!--            cursor: pointer; /* Указатель на кнопку */-->
+<!--            font-size: 16px; /* Размер шрифта */-->
+<!--        }-->
+<!--        .logout-btn:hover {-->
+<!--            text-decoration: underline; /* Подчеркивание при наведении */-->
+<!--        }-->
+<!--        .inactive-button {-->
+<!--            color: #212529; /* Цвет для неактивных кнопок */-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--&lt;!&ndash; Полоса с адресом электронной почты и кнопкой Logout &ndash;&gt;-->
+<!--<div class="header-bar">-->
+<!--    <div>-->
+<!--        <span id="emailDisplay" th:text="${adminEmail} + ' with roles: ADMIN USER'"></span>-->
+<!--    </div>-->
+<!--    <button class="logout-btn" id="logoutBtn" onclick="window.location.href='/logout'">Logout</button>-->
+<!--</div>-->
+
+<!--<div class="container mt-5">-->
+<!--    <div class="d-flex bd-highlight">-->
+<!--        <div class="flex-shrink-1 p-2 bd-highlight left-panel">-->
+<!--            <ul class="list-group">-->
+<!--                <li class="list-group-item active-button" id="adminBtn" onclick="showAdminPanel()">ADMIN</li>-->
+<!--                <li class="list-group-item inactive-button" id="userBtn" onclick="redirectToUserPage()">USER</li> &lt;!&ndash; Изменен вызов функции &ndash;&gt;-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--        <div class="w-100 p-2 bd-highlight right-panel">-->
+<!--            <h2 class="mb-4">Admin Panel</h2>-->
+<!--            <ul class="list-group list-group-horizontal mb-3">-->
+<!--                <li class="list-group-item" id="userTableBtn">User Table</li>-->
+<!--                <li class="list-group-item" id="newUserBtn">New User</li>-->
+<!--            </ul>-->
+
+<!--            <div id="content">-->
+<!--                <div id="adminPanel" style="display: block;">-->
+<!--                    <h3>All Users</h3>-->
+<!--                    &lt;!&ndash; Таблица пользователей &ndash;&gt;-->
+<!--                    <table border="2" class="table table-striped">-->
+<!--                        <thead>-->
+<!--                        <tr>-->
+<!--                            <td>ID</td>-->
+<!--                            <td>Name</td>-->
+<!--                            <td>Lastname</td>-->
+<!--                            <td>Age</td>-->
+<!--                            <td>Action</td>-->
+<!--                        </tr>-->
+<!--                        </thead>-->
+<!--                        <tbody>-->
+<!--                        <tr th:each="user : ${list}">-->
+<!--                            <td th:text="${user.getId()}"></td>-->
+<!--                            <td th:text="${user.getName()}"></td>-->
+<!--                            <td th:text="${user.getLastname()}"></td>-->
+<!--                            <td th:text="${user.getAge()}"></td>-->
+<!--                            <td>-->
+<!--                                <a th:href="@{/admin/edit(id=${user.getId()})}">edit</a>-->
+<!--                                <a th:href="@{/admin/delete(id=${user.getId()})}">delete</a>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                        </tbody>-->
+<!--                    </table>-->
+<!--                </div>-->
+
+<!--                <div id="newUserContent" style="display: none;">-->
+<!--                    <h3>Создание нового пользователя</h3>-->
+<!--                    <p>Форма для создания нового пользователя будет здесь.</p>-->
+<!--                </div>-->
+
+<!--                <div id="userContent" style="display: none;">-->
+<!--                    <h3>User information-page</h3>-->
+<!--                    <p>Здесь будет информация о пользователе.</p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<script>-->
+<!--    function showAdminPanel() {-->
+<!--        document.getElementById('adminPanel').style.display = 'block';-->
+<!--        document.getElementById('newUserContent').style.display = 'none';-->
+<!--        document.getElementById('userContent').style.display = 'none';-->
+
+<!--        document.getElementById('adminBtn').classList.add('active-button');-->
+<!--        document.getElementById('adminBtn').classList.remove('inactive-button');-->
+<!--        document.getElementById('userBtn').classList.remove('active-button');-->
+<!--        document.getElementById('userBtn').classList.add('inactive-button');-->
+<!--    }-->
+
+<!--    function redirectToUserPage() {-->
+<!--        window.location.href = '/user/'; // Замените на URL вашей страницы user.html-->
+<!--    }-->
+
+<!--    // Инициализируем первоначальное состояние-->
+<!--    showAdminPanel();-->
+<!--</script>-->
+
+<!--</body>-->
+<!--</html>-->
+
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Все пользователи</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Admin Panel</title>
+    <style>
+        /* Стили для цветовой схемы */
+        .left-panel {
+            background-color: white; /* Левый панель белый */
+        }
+        .right-panel {
+            background-color: whitesmoke; /* Светло-серый цвет (вся правая часть) */
+            padding: 20px; /* Добавляем отступы для лучшего восприятия */
+        }
+        /* Убираем границы списка для кнопок */
+        .list-group-item {
+            border: none;
+        }
+        .active-button {
+            background-color: #007bff; /* Цвет для активной кнопки */
+            color: white; /* Белый цвет текста для активной кнопки */
+        }
+        .header-bar {
+            background-color: black; /* Черный цвет полосы */
+            color: white; /* Белый цвет текста */
+            padding: 10px;
+            display: flex;
+            justify-content: space-between; /* Разделяем содержимое по краям */
+            align-items: center; /* Центрируем элементы вертикально */
+        }
+        .logout-btn {
+            background: none; /* Прозрачный фон */
+            border: none; /* Без границы */
+            color: white; /* Белый цвет текста */
+            cursor: pointer; /* Указатель на кнопку */
+            font-size: 16px; /* Размер шрифта */
+        }
+        .logout-btn:hover {
+            text-decoration: underline; /* Подчеркивание при наведении */
+        }
+        .inactive-button {
+            color: #212529; /* Цвет для неактивных кнопок */
+        }
+    </style>
 </head>
 <body>
-<p>&nbsp; Все пользователи</p>
-<table border="5">
-    <tbody>
-    <tr>
-        <td>Id</td>
-        <td>Name</td>
-        <td>Lastname</td>
-        <td>Age</td>
-        <td>Action</td>
-    </tr>
-    </tbody>
-    <p>&nbsp;</p>
-    <p>&nbsp;</p>
-    <tr th:each="user : ${list}">
-        <td th:text="${user.getId()}"></td>
-        <td th:text="${user.getName()}"></td>
-        <td th:text="${user.getLastname()}"></td>
-        <td th:text="${user.getAge()}"></td>
-        <td>
-            <a th:href="@{/admin/edit(id=${user.getId()})}">edit</a>
-            <a th:href="@{/admin/delete(id=${user.getId()})}">delete</a>
-        </td>
-    </tr>
 
-</table>
-<hr/>
-<a href="/admin/new">Create new user</a>
-<hr/>
-<a href="/logout">EXIT</a>
+<!-- Полоса с адресом электронной почты и кнопкой Logout -->
+<div class="header-bar">
+    <div>
+        <span id="emailDisplay" th:text="${adminEmail} + ' with roles: ADMIN USER'"></span>
+    </div>
+    <button class="logout-btn" id="logoutBtn" onclick="window.location.href='/logout'">Logout</button>
+</div>
+
+<div class="container mt-5">
+    <div class="d-flex bd-highlight">
+        <div class="flex-shrink-1 p-2 bd-highlight left-panel">
+            <ul class="list-group">
+                <li class="list-group-item active-button" id="adminBtn" onclick="showAdminPanel()">ADMIN</li>
+                <li class="list-group-item inactive-button" id="userBtn" onclick="redirectToUserPage()">USER</li>
+            </ul>
+        </div>
+        <div class="w-100 p-2 bd-highlight right-panel">
+            <h2 class="mb-4">Admin Panel</h2>
+            <ul class="list-group list-group-horizontal mb-3">
+                <li class="list-group-item active-button" id="userTableBtn" onclick="showUserTable()">User Table</li>
+                <li class="list-group-item inactive-button" id="newUserBtn" onclick="showNewUserForm()">New User</li>
+            </ul>
+
+            <div id="content">
+                <div id="adminPanel" style="display: block;">
+                    <h3>All Users</h3>
+                    <!-- Таблица пользователей -->
+                    <table border="2" class="table table-striped">
+                        <thead>
+                        <tr>
+                            <td>ID</td>
+                            <td>Name</td>
+                            <td>Lastname</td>
+                            <td>Age</td>
+                            <td>Action</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="user : ${list}">
+                            <td th:text="${user.getId()}"></td>
+                            <td th:text="${user.getName()}"></td>
+                            <td th:text="${user.getLastname()}"></td>
+                            <td th:text="${user.getAge()}"></td>
+                            <td>
+                                <a th:href="@{/admin/edit(id=${user.getId()})}">edit</a>
+                                <a th:href="@{/admin/delete(id=${user.getId()})}">delete</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="newUserContent" style="display: none;">
+                    <h3>Создание нового пользователя</h3>
+                    <p>Форма для создания нового пользователя будет здесь.</p>
+                </div>
+
+                <div id="userContent" style="display: none;">
+                    <h3>User information-page</h3>
+                    <p>Здесь будет информация о пользователе.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showAdminPanel() {
+        document.getElementById('adminPanel').style.display = 'block';
+        document.getElementById('newUserContent').style.display = 'none';
+        document.getElementById('userContent').style.display = 'none';
+
+        document.getElementById('adminBtn').classList.add('active-button');
+        document.getElementById('adminBtn').classList.remove('inactive-button');
+        document.getElementById('userBtn').classList.remove('active-button');
+        document.getElementById('userBtn').classList.add('inactive-button');
+    }
+
+    function showUserTable() {
+        document.getElementById('adminPanel').style.display = 'block';
+        document.getElementById('newUserContent').style.display = 'none';
+
+        // Установим активное состояние кнопки
+        document.getElementById('userTableBtn').classList.add('active-button');
+        document.getElementById('userTableBtn').classList.remove('inactive-button');
+        document.getElementById('newUserBtn').classList.remove('active-button');
+        document.getElementById('newUserBtn').classList.add('inactive-button');
+    }
+
+    function showNewUserForm() {
+        document.getElementById('newUserContent').style.display = 'block';
+        document.getElementById('adminPanel').style.display = 'none'; // Скрываем таблицу
+
+        // Установим активное состояние кнопки
+        document.getElementById('newUserBtn').classList.add('active-button');
+        document.getElementById('newUserBtn').classList.remove('inactive-button');
+        document.getElementById('userTableBtn').classList.remove('active-button');
+        document.getElementById('userTableBtn').classList.add('inactive-button');
+    }
+
+    function redirectToUserPage() {
+        window.location.href = '/user/';
+    }
+
+    // Инициализируем первоначальное состояние
+    showAdminPanel();
+</script>
+
 </body>
 </html>
+
