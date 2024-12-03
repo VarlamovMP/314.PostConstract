@@ -6,7 +6,6 @@ import ru.kata.spring.boot_security.demo.models.User;
 
 import java.util.List;
 
-@Service
 public interface UserService {
 
     User findUserByUsername(String username);
@@ -22,4 +21,6 @@ public interface UserService {
     void deleteUser(Long id);
 
     public void updateUser(User user, Long id);
+
+    String encodePassword(String password);
 }

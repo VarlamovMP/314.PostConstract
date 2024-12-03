@@ -312,7 +312,6 @@
 <!--</html>-->
 
 
-
 <!--<!DOCTYPE html>-->
 <!--<html lang="ru">-->
 <!--<head>-->
@@ -452,6 +451,372 @@
 <!--</html>-->
 
 
+<!--<!DOCTYPE html>-->
+<!--<html lang="ru">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">-->
+<!--    <title>Admin Panel</title>-->
+<!--    <style>-->
+<!--        /* Стили для цветовой схемы */-->
+<!--        .left-panel {-->
+<!--            background-color: white; /* Левый панель белый */-->
+<!--        }-->
+<!--        .right-panel {-->
+<!--            background-color: whitesmoke; /* Светло-серый цвет (вся правая часть) */-->
+<!--            padding: 20px; /* Добавляем отступы для лучшего восприятия */-->
+<!--        }-->
+<!--        /* Убираем границы списка для кнопок */-->
+<!--        .list-group-item {-->
+<!--            border: none;-->
+<!--        }-->
+<!--        .active-button {-->
+<!--            background-color: #007bff; /* Цвет для активной кнопки */-->
+<!--            color: white; /* Белый цвет текста для активной кнопки */-->
+<!--        }-->
+<!--        .header-bar {-->
+<!--            background-color: black; /* Черный цвет полосы */-->
+<!--            color: white; /* Белый цвет текста */-->
+<!--            padding: 10px;-->
+<!--            display: flex;-->
+<!--            justify-content: space-between; /* Разделяем содержимое по краям */-->
+<!--            align-items: center; /* Центрируем элементы вертикально */-->
+<!--        }-->
+<!--        .logout-btn {-->
+<!--            background: none; /* Прозрачный фон */-->
+<!--            border: none; /* Без границы */-->
+<!--            color: white; /* Белый цвет текста */-->
+<!--            cursor: pointer; /* Указатель на кнопку */-->
+<!--            font-size: 16px; /* Размер шрифта */-->
+<!--        }-->
+<!--        .logout-btn:hover {-->
+<!--            text-decoration: underline; /* Подчеркивание при наведении */-->
+<!--        }-->
+<!--        .inactive-button {-->
+<!--            color: #212529; /* Цвет для неактивных кнопок */-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--&lt;!&ndash; Полоса с адресом электронной почты и кнопкой Logout &ndash;&gt;-->
+<!--<div class="header-bar">-->
+<!--    <div>-->
+<!--        <span id="emailDisplay" th:text="${adminName} + ' with roles: ADMIN USER'"></span>-->
+<!--    </div>-->
+<!--    <button class="logout-btn" id="logoutBtn" onclick="window.location.href='/logout'">Logout</button>-->
+<!--</div>-->
+
+<!--<div class="container mt-5">-->
+<!--    <div class="d-flex bd-highlight">-->
+<!--        <div class="flex-shrink-1 p-2 bd-highlight left-panel">-->
+<!--            <ul class="list-group">-->
+<!--                <li class="list-group-item active-button" id="adminBtn" onclick="showAdminPanel()">ADMIN</li>-->
+<!--                <li class="list-group-item inactive-button" id="userBtn" onclick="redirectToUserPage()">USER</li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--        <div class="w-100 p-2 bd-highlight right-panel">-->
+<!--            <h2 class="mb-4">Admin Panel</h2>-->
+<!--            <ul class="list-group list-group-horizontal mb-3">-->
+<!--                <li class="list-group-item active-button" id="userTableBtn" onclick="showUserTable()">User Table</li>-->
+<!--                <li class="list-group-item inactive-button" id="newUserBtn" onclick="showNewUserForm()">New User</li>-->
+<!--            </ul>-->
+
+<!--            <div id="content">-->
+<!--                <div id="adminPanel" style="display: block;">-->
+<!--                    <h3>All Users</h3>-->
+<!--                    &lt;!&ndash; Таблица пользователей &ndash;&gt;-->
+<!--                    <table border="2" class="table table-striped">-->
+<!--                        <thead>-->
+<!--                        <tr>-->
+<!--                            <td>ID</td>-->
+<!--                            <td>Name</td>-->
+<!--                            <td>Lastname</td>-->
+<!--                            <td>Age</td>-->
+<!--                            <td>Action</td>-->
+<!--                        </tr>-->
+<!--                        </thead>-->
+<!--                        <tbody>-->
+<!--                        <tr th:each="user : ${list}">-->
+<!--                            <td th:text="${user.getId()}"></td>-->
+<!--                            <td th:text="${user.getName()}"></td>-->
+<!--                            <td th:text="${user.getLastname()}"></td>-->
+<!--                            <td th:text="${user.getAge()}"></td>-->
+<!--                            <td>-->
+<!--                                <a th:href="@{/admin/edit(id=${user.getId()})}">edit</a>-->
+<!--                                <a th:href="@{/admin/delete(id=${user.getId()})}">delete</a>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                        </tbody>-->
+<!--                    </table>-->
+<!--                </div>-->
+
+<!--                <div id="newUserContent" style="display: none;">-->
+<!--                    <h3>Создание нового пользователя</h3>-->
+<!--                    <p>Форма для создания нового пользователя будет здесь.</p>-->
+<!--                </div>-->
+
+<!--                <div id="userContent" style="display: none;">-->
+<!--                    <h3>User information-page</h3>-->
+<!--                    <p>Здесь будет информация о пользователе.</p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<script>-->
+<!--    function showAdminPanel() {-->
+<!--        document.getElementById('adminPanel').style.display = 'block';-->
+<!--        document.getElementById('newUserContent').style.display = 'none';-->
+<!--        document.getElementById('userContent').style.display = 'none';-->
+
+<!--        document.getElementById('adminBtn').classList.add('active-button');-->
+<!--        document.getElementById('adminBtn').classList.remove('inactive-button');-->
+<!--        document.getElementById('userBtn').classList.remove('active-button');-->
+<!--        document.getElementById('userBtn').classList.add('inactive-button');-->
+<!--    }-->
+
+<!--    function showUserTable() {-->
+<!--        document.getElementById('adminPanel').style.display = 'block';-->
+<!--        document.getElementById('newUserContent').style.display = 'none';-->
+
+<!--        // Установим активное состояние кнопки-->
+<!--        document.getElementById('userTableBtn').classList.add('active-button');-->
+<!--        document.getElementById('userTableBtn').classList.remove('inactive-button');-->
+<!--        document.getElementById('newUserBtn').classList.remove('active-button');-->
+<!--        document.getElementById('newUserBtn').classList.add('inactive-button');-->
+<!--    }-->
+
+<!--    function showNewUserForm() {-->
+<!--        document.getElementById('newUserContent').style.display = 'block';-->
+<!--        document.getElementById('adminPanel').style.display = 'none'; // Скрываем таблицу-->
+
+<!--        // Установим активное состояние кнопки-->
+<!--        document.getElementById('newUserBtn').classList.add('active-button');-->
+<!--        document.getElementById('newUserBtn').classList.remove('inactive-button');-->
+<!--        document.getElementById('userTableBtn').classList.remove('active-button');-->
+<!--        document.getElementById('userTableBtn').classList.add('inactive-button');-->
+<!--    }-->
+
+<!--    function redirectToUserPage() {-->
+<!--        window.location.href = '/user/';-->
+<!--    }-->
+<!--    // function  redirectToNewUserForm() {-->
+<!--    //     window.location.href = 'new';-->
+<!--    // }-->
+
+
+<!--    // Инициализируем первоначальное состояние-->
+<!--    showAdminPanel();-->
+<!--</script>-->
+
+<!--</body>-->
+<!--</html>-->
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="ru">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">-->
+<!--    <title>Admin Panel</title>-->
+<!--    <style>-->
+<!--        /* Стили для цветовой схемы */-->
+<!--        .left-panel {-->
+<!--            background-color: white; /* Левый панель белый */-->
+<!--        }-->
+
+<!--        .right-panel {-->
+<!--            background-color: whitesmoke; /* Светло-серый цвет (вся правая часть) */-->
+<!--            padding: 20px; /* Добавляем отступы для лучшего восприятия */-->
+<!--        }-->
+
+<!--        /* Убираем границы списка для кнопок */-->
+<!--        .list-group-item {-->
+<!--            border: none;-->
+<!--        }-->
+
+<!--        .active-button {-->
+<!--            background-color: #007bff; /* Цвет для активной кнопки */-->
+<!--            color: white; /* Белый цвет текста для активной кнопки */-->
+<!--        }-->
+
+<!--        .header-bar {-->
+<!--            background-color: black; /* Черный цвет полосы */-->
+<!--            color: white; /* Белый цвет текста */-->
+<!--            padding: 10px;-->
+<!--            display: flex;-->
+<!--            justify-content: space-between; /* Разделяем содержимое по краям */-->
+<!--            align-items: center; /* Центрируем элементы вертикально */-->
+<!--        }-->
+
+<!--        .logout-btn {-->
+<!--            background: none; /* Прозрачный фон */-->
+<!--            border: none; /* Без границы */-->
+<!--            color: white; /* Белый цвет текста */-->
+<!--            cursor: pointer; /* Указатель на кнопку */-->
+<!--            font-size: 16px; /* Размер шрифта */-->
+<!--        }-->
+
+<!--        .logout-btn:hover {-->
+<!--            text-decoration: underline; /* Подчеркивание при наведении */-->
+<!--        }-->
+
+<!--        .inactive-button {-->
+<!--            color: #212529; /* Цвет для неактивных кнопок */-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--&lt;!&ndash; Полоса с адресом электронной почты и кнопкой Logout &ndash;&gt;-->
+<!--<div class="header-bar">-->
+<!--    <div>-->
+<!--        <span id="emailDisplay" th:text="${adminName} + ' with roles: ADMIN USER'"></span>-->
+<!--    </div>-->
+<!--    <button class="logout-btn" id="logoutBtn" onclick="window.location.href='/logout'">Logout</button>-->
+<!--</div>-->
+
+<!--<div class="container mt-5">-->
+<!--    <div class="d-flex bd-highlight">-->
+<!--        <div class="flex-shrink-1 p-2 bd-highlight left-panel">-->
+<!--            <ul class="list-group">-->
+<!--                <li class="list-group-item active-button" id="adminBtn" onclick="showAdminPanel()">ADMIN</li>-->
+<!--                <li class="list-group-item inactive-button" id="userBtn" onclick="redirectToUserPage()">USER</li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--        <div class="w-100 p-2 bd-highlight right-panel">-->
+<!--            <h2 class="mb-4">Admin Panel</h2>-->
+<!--            <ul class="list-group list-group-horizontal mb-3">-->
+<!--                <li class="list-group-item active-button" id="userTableBtn" onclick="showUserTable()">User Table</li>-->
+<!--                <li class="list-group-item inactive-button" id="newUserBtn" onclick="showNewUserForm()">New User</li>-->
+<!--            </ul>-->
+
+<!--            <div id="content">-->
+<!--                <div id="adminPanel" style="display: block;">-->
+<!--                    <h3>All Users</h3>-->
+<!--                    &lt;!&ndash; Таблица пользователей &ndash;&gt;-->
+<!--                    <table border="2" class="table table-striped">-->
+<!--                        <thead>-->
+<!--                        <tr>-->
+<!--                            <td>ID</td>-->
+<!--                            <td>Name</td>-->
+<!--                            <td>Lastname</td>-->
+<!--                            <td>Age</td>-->
+<!--                            <td>Action</td>-->
+<!--                        </tr>-->
+<!--                        </thead>-->
+<!--                        <tbody>-->
+<!--                        <tr th:each="user : ${list}">-->
+<!--                            <td th:text="${user.getId()}"></td>-->
+<!--                            <td th:text="${user.getName()}"></td>-->
+<!--                            <td th:text="${user.getLastname()}"></td>-->
+<!--                            <td th:text="${user.getAge()}"></td>-->
+<!--                            <td>-->
+<!--                                <a th:href="@{/admin/edit(id=${user.getId()})}">edit</a>-->
+<!--                                <a th:href="@{/admin/delete(id=${user.getId()})}">delete</a>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                        </tbody>-->
+<!--                    </table>-->
+<!--                </div>-->
+
+<!--                <div id="newUserContent" style="display: none;">-->
+<!--                    <h3>Add new user</h3>-->
+<!--&lt;!&ndash;                    <form>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <div class="col-md-4">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <label class="form-label">First name</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <input type="text" class="form-control">&ndash;&gt;-->
+
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <div class="col-md-4">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <label class="form-label">Last name</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <input type="text" class="form-control">&ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <div class="col-md-4">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <label class="form-label">Age</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <input type="text" class="form-control">&ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <div class="col-md-4">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <label class="form-label">Username</label>&ndash;&gt;-->
+
+<!--&lt;!&ndash;                            <input type="text" class="form-control">&ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <div class="col-md-4">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <label class="form-label">Password</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <input type="text" class="form-control">&ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <label class="form-label">Role</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <div class="form-floating">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example">&ndash;&gt;-->
+<!--&lt;!&ndash;                                <option value="1">ADMIN</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                                <option value="2">USER</option>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </select>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <div class="col-12">&ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <div class="col-12">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <button class="btn btn-primary" type="submit">Add new user</button>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </form>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <div id="userContent" style="display: none;">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <h3>User information-page</h3>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <p>Здесь будет информация о пользователе.</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--                    -->
+<!--                    -->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--    <script>-->
+<!--        function showAdminPanel() {-->
+<!--            document.getElementById('adminPanel').style.display = 'block';-->
+<!--            document.getElementById('newUserContent').style.display = 'none';-->
+<!--            document.getElementById('userContent').style.display = 'none';-->
+
+<!--            document.getElementById('adminBtn').classList.add('active-button');-->
+<!--            document.getElementById('adminBtn').classList.remove('inactive-button');-->
+<!--            document.getElementById('userBtn').classList.remove('active-button');-->
+<!--            document.getElementById('userBtn').classList.add('inactive-button');-->
+<!--        }-->
+
+<!--        function showUserTable() {-->
+<!--            document.getElementById('adminPanel').style.display = 'block';-->
+<!--            document.getElementById('newUserContent').style.display = 'none';-->
+
+<!--            // Установим активное состояние кнопки-->
+<!--            document.getElementById('userTableBtn').classList.add('active-button');-->
+<!--            document.getElementById('userTableBtn').classList.remove('inactive-button');-->
+<!--            document.getElementById('newUserBtn').classList.remove('active-button');-->
+<!--            document.getElementById('newUserBtn').classList.add('inactive-button');-->
+<!--        }-->
+
+<!--        function showNewUserForm() {-->
+<!--            document.getElementById('newUserContent').style.display = 'block';-->
+<!--            document.getElementById('adminPanel').style.display = 'none'; // Скрываем таблицу-->
+
+<!--            // Установим активное состояние кнопки-->
+<!--            document.getElementById('newUserBtn').classList.add('active-button');-->
+<!--            document.getElementById('newUserBtn').classList.remove('inactive-button');-->
+<!--            document.getElementById('userTableBtn').classList.remove('active-button');-->
+<!--            document.getElementById('userTableBtn').classList.add('inactive-button');-->
+<!--        }-->
+
+<!--        function redirectToUserPage() {-->
+<!--            window.location.href = '/user/';-->
+<!--        }-->
+
+<!--        // Инициализируем первоначальное состояние-->
+<!--        showAdminPanel();-->
+<!--    </script>-->
+
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -464,18 +829,22 @@
         .left-panel {
             background-color: white; /* Левый панель белый */
         }
+
         .right-panel {
             background-color: whitesmoke; /* Светло-серый цвет (вся правая часть) */
             padding: 20px; /* Добавляем отступы для лучшего восприятия */
         }
+
         /* Убираем границы списка для кнопок */
         .list-group-item {
             border: none;
         }
+
         .active-button {
             background-color: #007bff; /* Цвет для активной кнопки */
             color: white; /* Белый цвет текста для активной кнопки */
         }
+
         .header-bar {
             background-color: black; /* Черный цвет полосы */
             color: white; /* Белый цвет текста */
@@ -484,6 +853,7 @@
             justify-content: space-between; /* Разделяем содержимое по краям */
             align-items: center; /* Центрируем элементы вертикально */
         }
+
         .logout-btn {
             background: none; /* Прозрачный фон */
             border: none; /* Без границы */
@@ -491,9 +861,11 @@
             cursor: pointer; /* Указатель на кнопку */
             font-size: 16px; /* Размер шрифта */
         }
+
         .logout-btn:hover {
             text-decoration: underline; /* Подчеркивание при наведении */
         }
+
         .inactive-button {
             color: #212529; /* Цвет для неактивных кнопок */
         }
@@ -504,7 +876,7 @@
 <!-- Полоса с адресом электронной почты и кнопкой Logout -->
 <div class="header-bar">
     <div>
-        <span id="emailDisplay" th:text="${adminEmail} + ' with roles: ADMIN USER'"></span>
+        <span id="emailDisplay" th:text="${adminName} + ' with roles: ADMIN USER'"></span>
     </div>
     <button class="logout-btn" id="logoutBtn" onclick="window.location.href='/logout'">Logout</button>
 </div>
@@ -521,7 +893,7 @@
             <h2 class="mb-4">Admin Panel</h2>
             <ul class="list-group list-group-horizontal mb-3">
                 <li class="list-group-item active-button" id="userTableBtn" onclick="showUserTable()">User Table</li>
-                <li class="list-group-item inactive-button" id="newUserBtn" onclick="redirectToNewUserForm()">New User</li>
+                <li class="list-group-item inactive-button" id="newUserBtn" onclick="showNewUserForm()">New User</li>
             </ul>
 
             <div id="content">
@@ -554,64 +926,125 @@
                 </div>
 
                 <div id="newUserContent" style="display: none;">
-                    <h3>Создание нового пользователя</h3>
-                    <p>Форма для создания нового пользователя будет здесь.</p>
-                </div>
+                    <h3>Add new user</h3>
+                    <form th:method="POST" th:action="@{/admin/save}" th:object="${user}" class="col-md-6 mx-auto">
+                        <input type="hidden" th:field="*{id}"/>
 
-                <div id="userContent" style="display: none;">
-                    <h3>User information-page</h3>
-                    <p>Здесь будет информация о пользователе.</p>
+                        <div class="row mb-3">
+                            <label for="name" class="form-label text-center fw-bold">First name</label>
+                            <div class="col-sm-10">
+                                <input type="text" th:field="*{name}" class="form-control form-control-lg text-center" id="name"
+                                       placeholder="Enter your first name" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="lastname" class="form-label text-center fw-bold">Last name</label>
+                            <div class="col-sm-10">
+                                <input type="text" th:field="*{lastname}" class="form-control text-center" id="lastname"
+                                       placeholder="Enter your last name" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="age" class="form-label text-center fw-bold">Age</label>
+                            <div class="col-sm-10">
+                                <input type="number" th:field="*{age}" class="form-control form-control-sm text-center" id="age"
+                                       placeholder="Enter your age" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="username" class="form-label text-center fw-bold">Username</label>
+                            <div class="col-sm-10">
+                                <input type="text" th:field="*{username}" class="form-control text-center" id="username"
+                                       placeholder="Enter your username" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="password" class="form-label text-center fw-bold">Password</label>
+                            <div class="col-sm-10">
+                                <input type="password" th:field="*{password}" class="form-control form-control-sm text-center"
+                                       id="password" placeholder="Enter your password" required>
+                            </div>
+                        </div>
+
+<!--                        <div class="row mb-3">-->
+<!--                            <label for="role" class="form-label text-center fw-bold">Role</label>-->
+<!--                            <div class="col-sm-10">-->
+<!--                                <div class="form-floating">-->
+<!--                                    <select th:field="*{role}" class="form-select text-center" id="role" aria-label="Select role" required>-->
+<!--                                        <option value="" selected disabled>Choose a role</option>-->
+<!--                                        <option value="1">ADMIN</option>-->
+<!--                                        <option value="2">USER</option>-->
+<!--                                    </select>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                        <div class="row mb-3">
+                            <label for="role" class="form-label text-center fw-bold">Role</label>
+                            <div class="col-sm-10">
+                                <div class="form-floating">
+                                    <select th:field="*{roles}" class="form-select text-center" id="role" aria-label="Select role" required>
+                                        <option value="" selected disabled>Choose a role</option>
+                                        <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.name}"></option>
+                                        <option value="1">ADMIN</option>-->
+                                        <option value="2">USER</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success">Add new user</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        function showAdminPanel() {
+            document.getElementById('adminPanel').style.display = 'block';
+            document.getElementById('newUserContent').style.display = 'none';
+            document.getElementById('userContent').style.display = 'none';
+
+            document.getElementById('adminBtn').classList.add('active-button');
+            document.getElementById('adminBtn').classList.remove('inactive-button');
+            document.getElementById('userBtn').classList.remove('active-button');
+            document.getElementById('userBtn').classList.add('inactive-button');
+        }
+
+        function showUserTable() {
+            document.getElementById('adminPanel').style.display = 'block';
+            document.getElementById('newUserContent').style.display = 'none';
+
+            document.getElementById('userTableBtn').classList.add('active-button');
+            document.getElementById('userTableBtn').classList.remove('inactive-button');
+            document.getElementById('newUserBtn').classList.remove('active-button');
+            document.getElementById('newUserBtn').classList.add('inactive-button');
+        }
+
+        function showNewUserForm() {
+            document.getElementById('newUserContent').style.display = 'block';
+            document.getElementById('adminPanel').style.display = 'none';
+
+            document.getElementById('newUserBtn').classList.add('active-button');
+            document.getElementById('newUserBtn').classList.remove('inactive-button');
+            document.getElementById('userTableBtn').classList.remove('active-button');
+            document.getElementById('userTableBtn').classList.add('inactive-button');
+        }
+
+        function redirectToUserPage() {
+            window.location.href = '/user/';
+        }
+
+        // Инициализируем первоначальное состояние
+        showAdminPanel();
+    </script>
 </div>
-
-<script>
-    function showAdminPanel() {
-        document.getElementById('adminPanel').style.display = 'block';
-        document.getElementById('newUserContent').style.display = 'none';
-        document.getElementById('userContent').style.display = 'none';
-
-        document.getElementById('adminBtn').classList.add('active-button');
-        document.getElementById('adminBtn').classList.remove('inactive-button');
-        document.getElementById('userBtn').classList.remove('active-button');
-        document.getElementById('userBtn').classList.add('inactive-button');
-    }
-
-    function showUserTable() {
-        document.getElementById('adminPanel').style.display = 'block';
-        document.getElementById('newUserContent').style.display = 'none';
-
-        // Установим активное состояние кнопки
-        document.getElementById('userTableBtn').classList.add('active-button');
-        document.getElementById('userTableBtn').classList.remove('inactive-button');
-        document.getElementById('newUserBtn').classList.remove('active-button');
-        document.getElementById('newUserBtn').classList.add('inactive-button');
-    }
-
-    function showNewUserForm() {
-        document.getElementById('newUserContent').style.display = 'block';
-        document.getElementById('adminPanel').style.display = 'none'; // Скрываем таблицу
-
-        // Установим активное состояние кнопки
-        document.getElementById('newUserBtn').classList.add('active-button');
-        document.getElementById('newUserBtn').classList.remove('inactive-button');
-        document.getElementById('userTableBtn').classList.remove('active-button');
-        document.getElementById('userTableBtn').classList.add('inactive-button');
-    }
-
-    function redirectToUserPage() {
-        window.location.href = '/user/';
-    }
-    function  redirectToNewUserForm() {
-        window.location.href = 'new';
-    }
-
-
-    // Инициализируем первоначальное состояние
-    showAdminPanel();
-</script>
 
 </body>
 </html>
