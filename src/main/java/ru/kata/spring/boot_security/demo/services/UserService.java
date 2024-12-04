@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface UserService {
 
-    User findUserByUsername(String username);
+    User findUserByEmail(String email);
 
     UserDetails loadUserByUsername(String username);
 
@@ -22,5 +22,4 @@ public interface UserService {
 
     public void updateUser(User user, Long id);
 
-    String encodePassword(String password);
 }
