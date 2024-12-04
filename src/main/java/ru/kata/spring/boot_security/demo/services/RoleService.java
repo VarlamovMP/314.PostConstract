@@ -10,6 +10,5 @@ public interface RoleService {
 
     Role findRoleByName(String name);
 
-    @Transactional
     void saveRole(Role role);
 }

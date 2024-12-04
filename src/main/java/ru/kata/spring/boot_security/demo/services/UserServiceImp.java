@@ -6,15 +6,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
+
 public class UserServiceImp implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
@@ -44,6 +44,8 @@ public class UserServiceImp implements UserService, UserDetailsService {
                 user.getAge() != 0;
     }
 
+    @Override
+    @Transactional
     public void saveUser(User user) {
         if (validUser(user)) {
             Optional<User> existingUser = Optional.ofNullable(findUserByEmail(user.getEmail()));
@@ -53,6 +55,8 @@ public class UserServiceImp implements UserService, UserDetailsService {
         }
     }
 
+    @Override
+    @Transactional
     public void updateUser(User user, Long id) {
         User updateUser = findUser(id);
         if (user.getPassword().isBlank()) {
@@ -76,6 +80,8 @@ public class UserServiceImp implements UserService, UserDetailsService {
         );
     }
 
+    @Override
+    @Transactional
     public void deleteUser(Long id) {
         userRepository.delete(findUser(id));
     }
