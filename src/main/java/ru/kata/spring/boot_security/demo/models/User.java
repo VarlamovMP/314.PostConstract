@@ -64,9 +64,9 @@ public class User implements UserDetails {
         return email;
     }
 
-    public String setEmail() {
-        return this.email = email;
-    }
+//    public String setEmail() {
+//        return this.email = email;
+//    }
 
     public void setEmail(String email) {
         this.email = email;

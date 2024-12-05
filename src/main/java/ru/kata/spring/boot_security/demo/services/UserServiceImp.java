@@ -10,6 +10,7 @@ import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -50,29 +51,25 @@ public class UserServiceImp implements UserService, UserDetailsService {
     public User updateUserById(Long id, User user) {
         User updateUser = getUserById(id);
         if (!user.getFirstName().isBlank() && !user.getLastName().isBlank() && !user.getEmail().isBlank() && user.getAge() > 0) {
-            if (updateUser.getEmail() != user.getEmail()) {
+            if (!Objects.equals(updateUser.getEmail(), user.getEmail())) {
                 if (getByEmail(user.getEmail()) == null) {
-                    if (user.getPassword().isBlank()) {
-                        user.setPassword(updateUser.getPassword());
-                        return userRepository.save(user);
-                    } else {
-                        String encodedPassword = new BCryptPasswordEncoder(12).encode(user.getPassword());
-                        user.setPassword(encodedPassword);
-                        return userRepository.save(user);
-                    }
+                    return processAndSaveUser(user, updateUser);
                 }
             } else {
-                if (user.getPassword().isBlank()) {
-                    user.setPassword(updateUser.getPassword());
-                    return userRepository.save(user);
-                } else {
-                    String encodedPassword = new BCryptPasswordEncoder(12).encode(user.getPassword());
-                    user.setPassword(encodedPassword);
-                    return userRepository.save(user);
-                }
+                return processAndSaveUser(user, updateUser);
             }
         }
         return null;
+    }
+
+    private User processAndSaveUser(User user, User updateUser) {
+        if (user.getPassword().isBlank()) {
+            user.setPassword(updateUser.getPassword());
+        } else {
+            String encodedPassword = new BCryptPasswordEncoder(12).encode(user.getPassword());
+            user.setPassword(encodedPassword);
+        }
+        return userRepository.save(user);
     }
 
     @Override
