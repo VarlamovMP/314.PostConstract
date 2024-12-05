@@ -11,40 +11,12 @@ import java.util.List;
 
 @Service
 public class RoleServiceImp implements RoleService {
-//    private final RoleRepository roleRepository;
-//
-//    public RoleServiceImp(RoleRepository roleRepository) {
-//        this.roleRepository = roleRepository;
-//    }
-//
-////    @Override
-////    public List<Role> getListRoles() {
-////        return roleRepository.findAll();
-////    }
-//
-//    @Override
-//    @Transactional(readOnly = true)
-//    public Role findRoleByName(String name) {
-//        return roleRepository.findRoleByName(name);
-//    }
-//
-////    @Transactional
-////    @Override
-////    public void saveRole(Role role) {
-////        roleRepository.save(role);
-////    }
-//
-//    @Override
-//    @Transactional(readOnly = true)
-//    public List<Role> findAll() {
-//        return roleRepository.findAll();
-//    }
-
     private final RoleRepository roleRepository;
 
     public RoleServiceImp(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
     }
+
     @Override
     @Transactional(readOnly = true)
     public Role findRoleByName(String name) {
@@ -53,7 +25,7 @@ public class RoleServiceImp implements RoleService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Role> findAll(){
+    public List<Role> findAll() {
         return roleRepository.findAll();
     }
 }
