@@ -8,18 +8,30 @@ import java.util.List;
 
 public interface UserService {
 
-    User findUserByEmail(String email);
+//    User findUserByEmail(String email);
+//
+//    UserDetails loadUserByUsername(String username);
+//
+//    void saveUser(User user);
+//
+//    List<User> getListUsers();
+//
+//    User findUser(Long id);
+//
+//    void deleteUser(Long id);
+//
+//    public void updateUser(User user, Long id);
 
-    UserDetails loadUserByUsername(String username);
+    List<User> getAllUsers();
 
-    void saveUser(User user);
+    User saveUser(User user);
 
-    List<User> getListUsers();
+    void deleteUserById(Long id);
 
-    User findUser(Long id);
+    User updateUserById(Long id, User user);
 
-    void deleteUser(Long id);
+    User getUserById(Long id);
 
-    public void updateUser(User user, Long id);
+    User getByEmail(String email);
 
 }
