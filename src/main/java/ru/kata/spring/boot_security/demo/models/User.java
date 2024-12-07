@@ -30,8 +30,15 @@ public class User implements UserDetails {
     @NotNull
     private String email;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = CascadeType.MERGE)
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "roles_id")
+    )
+
+
     private Set<Role> roles;
 
     public User(Long id, Byte age, String lastName, String firstName, String password, String email, Set<Role> roles) {
@@ -63,10 +70,6 @@ public class User implements UserDetails {
     public String getEmail() {
         return email;
     }
-
-//    public String setEmail() {
-//        return this.email = email;
-//    }
 
     public void setEmail(String email) {
         this.email = email;
