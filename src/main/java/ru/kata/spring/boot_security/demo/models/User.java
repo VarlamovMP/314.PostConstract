@@ -6,6 +6,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -17,10 +18,13 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotNull
     private String firstName;
+
     @NotNull
     private String lastName;
+
     @NotNull
     private Byte age;
 
@@ -28,8 +32,9 @@ public class User implements UserDetails {
     private String password;
 
     @NotNull
+    @Column(name = "email", unique = true)
+    @Email
     private String email;
-
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -37,8 +42,6 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "roles_id")
     )
-
-
     private Set<Role> roles;
 
     public User(Long id, Byte age, String lastName, String firstName, String password, String email, Set<Role> roles) {
@@ -99,7 +102,7 @@ public class User implements UserDetails {
         this.firstName = firstName;
     }
 
-    public int getAge() {
+    public byte getAge() {
         return age;
     }
 
