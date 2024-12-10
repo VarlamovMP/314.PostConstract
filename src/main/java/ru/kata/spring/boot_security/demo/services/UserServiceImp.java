@@ -29,16 +29,6 @@ public class UserServiceImp implements UserService, UserDetailsService {
                 user.getAge() > 0;
     }
 
-    private User processAndSaveUser(User user, User updateUser) {
-        if (!user.getPassword().isBlank()) {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-        } else {
-            user.setPassword(updateUser.getPassword());
-        }
-        user.setId(updateUser.getId());
-        return userRepository.save(user);
-    }
-
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -64,33 +54,23 @@ public class UserServiceImp implements UserService, UserDetailsService {
         throw new IllegalArgumentException("Invalid user data");
     }
 
-//    @Transactional
-//    @Override
-//    public User updateUserById(Long id, User user) {
-//        User updateUser = getUserById(id);
-//        User anotherUser = getByEmail(user.getEmail());
-//        if (anotherUser != null && !anotherUser.getId().equals(updateUser.getId())) {
-//            throw new EmailAlreadyExistsException("Email занят");
-//        }
-//        return processAndSaveUser(user, updateUser);
-//    }
-@Transactional
-@Override
-public User updateUserById(Long id, User user) {
-    User existingUser = getUserById(id);
-    User anotherUser = getByEmail(user.getEmail());
-    if (anotherUser != null && !anotherUser.getId().equals(existingUser.getId())) {
-        throw new EmailAlreadyExistsException("Email занят");
+    @Transactional
+    @Override
+    public User updateUserById(Long id, User user) {
+        User existingUser = getUserById(id);
+        User anotherUser = getByEmail(user.getEmail());
+        if (anotherUser != null && !anotherUser.getId().equals(existingUser.getId())) {
+            throw new EmailAlreadyExistsException("Email занят");
+        }
+        existingUser.setFirstName(user.getFirstName());
+        existingUser.setLastName(user.getLastName());
+        existingUser.setEmail(user.getEmail());
+        existingUser.setAge(user.getAge());
+        if (!user.getPassword().isBlank()) {
+            existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+        return saveUser(existingUser);
     }
-    existingUser.setFirstName(user.getFirstName());
-    existingUser.setLastName(user.getLastName());
-    existingUser.setEmail(user.getEmail());
-    existingUser.setAge(user.getAge());
-    if (!user.getPassword().isBlank()) {
-        existingUser.setPassword(passwordEncoder.encode(user.getPassword()));
-    }
-    return saveUser(existingUser);
-}
 
     @Override
     @Transactional(readOnly = true)
