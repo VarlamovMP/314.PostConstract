@@ -35,7 +35,7 @@ public class InitMetod {
         Set<Role> userRoles = new HashSet<>();
         userRoles.add(userRole);
 
-        User user1 = new User((byte) 30, "admin", "admin", "admin", "admin@mail.ru", userRoles);
+        User user1 = new User((byte) 30, "admin", "admin", "admin", "admin@mail.ru", adminRoles);
         User user2 = new User((byte) 30, "user", "user", "user", "user@mail.ru", userRoles);
         userService.saveUser(user1);
         userService.saveUser(user2);

@@ -41,7 +41,7 @@ public class User implements UserDetails {
     private Set<Role> roles;
 
     public User( Byte age, String lastName, String firstName, String password, String email, Set<Role> roles) {
-//        this.id = id;
+       this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
