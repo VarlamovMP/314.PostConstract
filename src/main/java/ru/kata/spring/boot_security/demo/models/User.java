@@ -37,15 +37,11 @@ public class User implements UserDetails {
     private String email;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "roles_id")
-    )
+
     private Set<Role> roles;
 
-    public User(Long id, Byte age, String lastName, String firstName, String password, String email, Set<Role> roles) {
-        this.id = id;
+    public User( Byte age, String lastName, String firstName, String password, String email, Set<Role> roles) {
+//        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
